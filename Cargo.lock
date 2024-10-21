@@ -268,7 +268,7 @@ checksum = "cd7cc57abe963c6d3b9d8be5b06ba7c8957a930305ca90304f24ef040aa6f961"
 [[package]]
 name = "cloudflare"
 version = "0.12.0"
-source = "git+https://github.com/Wyn-Price/cloudflare-rs.git?branch=wyn/zone-details#a6179f8b3b520b17788f39fcd5f103e81a87a890"
+source = "git+https://github.com/Pablo1107/cloudflare-rs.git?branch=wyn/zone-details#59432045b1256ba46f66efc69fa3f152024ae180"
 dependencies = [
  "chrono",
  "http",

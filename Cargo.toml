@@ -19,7 +19,7 @@ version = "^4.4"
 features = ["wrap_help", "derive", "env"]
 
 [patch.crates-io]
-cloudflare = { git = "https://github.com/Wyn-Price/cloudflare-rs.git", branch = "wyn/zone-details" }
+cloudflare = { git = "https://github.com/Pablo1107/cloudflare-rs.git", branch = "wyn/zone-details" }
 public-ip = { git = "https://github.com/jcgruenhage/rust-public-ip.git", branch = "cloudflare-provider" }
 
 [profile.release]
