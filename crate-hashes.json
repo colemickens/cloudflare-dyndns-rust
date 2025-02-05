@@ -1,4 +1,3 @@
 {
-  "git+https://github.com/Wyn-Price/cloudflare-rs.git?branch=wyn%2Fzone-details#cloudflare@0.12.0": "1myga8ys6i35qnwg16kcc212b8r0acpi8wyhmcvzk0vvffcbkw7k",
   "git+https://github.com/jcgruenhage/rust-public-ip.git?branch=cloudflare-provider#public-ip@0.2.2": "0djzfp08rja39hyh9z9q180s4nycbixh5f19nglp78q087vn2dqc"
 }
