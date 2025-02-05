@@ -46,7 +46,6 @@ impl Clone_ for DnsRecord {
 			meta: Meta {
 				auto_added: self.meta.auto_added,
 			},
-			locked: self.locked,
 			ttl: self.ttl,
 			zone_id: self.zone_id.to_owned(),
 			modified_on: self.modified_on,
