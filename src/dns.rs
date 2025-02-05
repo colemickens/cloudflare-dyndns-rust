@@ -28,16 +28,20 @@ trait Info {
 }
 
 pub trait Requests {
-	fn update_request(
-		&self,
+	fn update_request<'a>(
+		&'a self,
 		ip: IpAddr,
-	) -> Option<UpdateDnsRecord>;
+		id: &'a str,
+	) -> Option<UpdateDnsRecord<'a>>;
 	fn create_request<'a>(
 		ip: IpAddr,
 		name: &'a str,
 		id: &'a str,
 	) -> CreateDnsRecord<'a>;
-	fn delete_request(&self) -> DeleteDnsRecord;
+	fn delete_request<'a>(
+		&'a self,
+		id: &'a str,
+	) -> DeleteDnsRecord<'a>;
 }
 impl Clone_ for DnsRecord {
 	fn clone(&self) -> Self {
@@ -47,14 +51,12 @@ impl Clone_ for DnsRecord {
 				auto_added: self.meta.auto_added,
 			},
 			ttl: self.ttl,
-			zone_id: self.zone_id.to_owned(),
 			modified_on: self.modified_on,
 			created_on: self.created_on,
 			proxiable: self.proxiable,
 			proxied: self.proxied,
 			content: self.content.to_owned(),
 			id: self.id.to_owned(),
-			zone_name: self.zone_name.to_owned(),
 		}
 	}
 }
@@ -84,10 +86,11 @@ impl Info for DnsContent {
 }
 
 impl Requests for DnsRecord {
-	fn update_request(
-		&self,
+	fn update_request<'a>(
+		&'a self,
 		ip: IpAddr,
-	) -> Option<UpdateDnsRecord> {
+		id: &'a str,
+	) -> Option<UpdateDnsRecord<'a>> {
 		let current_ip = self.content.get_ip()?;
 
 		if ip == current_ip {
@@ -111,7 +114,7 @@ impl Requests for DnsRecord {
 
 		log::info!("request: {} ({} → {})\n", self.name, current_ip, ip);
 		Some(UpdateDnsRecord {
-			zone_identifier: &self.zone_id,
+			zone_identifier: id,
 			identifier: &self.id,
 			params: UpdateDnsRecordParams {
 				name: &self.name,
@@ -142,14 +145,17 @@ impl Requests for DnsRecord {
 		}
 	}
 
-	fn delete_request(&self) -> DeleteDnsRecord {
+	fn delete_request<'a>(
+		&'a self,
+		id: &'a str,
+	) -> DeleteDnsRecord<'a> {
 		log::info!(
 			"deleting {} record: {}\n",
 			self.content.get_type(),
 			self.name
 		);
 		DeleteDnsRecord {
-			zone_identifier: &self.zone_id,
+			zone_identifier: id,
 			identifier: &self.id,
 		}
 	}

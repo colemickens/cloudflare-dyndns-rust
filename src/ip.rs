@@ -33,7 +33,7 @@ impl DynDns for Option<IpAddr> {
 				match rec.content {
 					DnsContent::A { content: _ }
 					| DnsContent::AAAA { content: _ } => Some(tokio::spawn(async move {
-						if let Some(req) = rec.update_request(ip) {
+						if let Some(req) = rec.update_request(ip, &id) {
 							client.request(&req).await?;
 						}
 						Ok(())
@@ -51,7 +51,7 @@ impl DynDns for Option<IpAddr> {
 		} else {
 			rec.map(|rec| {
 				tokio::spawn(async move {
-					client.request(&rec.delete_request()).await?;
+					client.request(&rec.delete_request(&id)).await?;
 					Ok(())
 				})
 			})
